@@ -1,4 +1,15 @@
+import { RegisterRequest } from "@/model/auth";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { registerUserSchema } from "./schema";
+
 const SignUp = () => {
+    const { name, email, password } = registerUserSchema;
+    const { register, handleSubmit, formState: { errors }, reset } = useForm<RegisterRequest>();
+    
+    const onSubmit: SubmitHandler<RegisterRequest> = (data: RegisterRequest) => {
+        console.log(data);
+    }
+
     return ( 
         <div className="flex flex-col justify-center md:w-1/2 w-full p-12 bg-white h-auto md:rounded-r-2xl">
             <div className="p-12">
@@ -38,15 +49,14 @@ const SignUp = () => {
                     {" "}
                     <p>or us your email for registration</p>
                 </div>
-                <form className="space-y-6 ">
+                <form className="space-y-6 " onSubmit={handleSubmit(onSubmit)}>
                     <div className="relative mt-10 text-gray-900">
                         <input
                             type="name"
-                            id="name-login"
-                            name="name-login"
-                            required
+                            id="name"
+                            {...register('name', name.validation)}
                             className="w-full px-12 py-3 border border-gray-300 rounded-full shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
-                            placeholder="Enter your name"
+                            placeholder={name.placeholder}
                         />
                         <svg
                             className="absolute left-5 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400 fill-current"
@@ -59,11 +69,10 @@ const SignUp = () => {
                     <div className="relative mt-10 text-gray-900">
                         <input
                             type="email"
-                            id="email-login"
-                            name="email-login"
-                            required
+                            id="email"
+                            {...register('email', email.validation)}
                             className="w-full px-12 py-3 border border-gray-300 rounded-full shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
-                            placeholder="Enter your email"
+                            placeholder={email.placeholder}
                         />
                         <svg
                             className="absolute left-5 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400 fill-current"
@@ -76,11 +85,10 @@ const SignUp = () => {
                     <div className="relative mt-1 text-gray-900">
                         <input
                             type="password"
-                            id="password-login"
-                            name="password-login"
-                            required
+                            id="password"
+                            {...register('password', password.validation)}
                             className="w-full px-12 py-3 border border-gray-300 rounded-full shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
-                            placeholder="Enter your password"
+                            placeholder={password.placeholder}
                         />
                         <svg
                             className="absolute left-5 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400 fill-current"

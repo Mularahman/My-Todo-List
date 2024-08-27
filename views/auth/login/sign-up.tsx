@@ -1,4 +1,16 @@
+"use client"
+import { useForm, SubmitHandler } from "react-hook-form";
+import { loginUserSchema } from "./schema";
+import { LoginRequest } from "@/model/auth";
+
 const SignUp = () => {
+    const { email, password } = loginUserSchema;
+    const { register, handleSubmit, formState: { errors }, reset } = useForm<LoginRequest>();
+
+    const onSubmit: SubmitHandler<LoginRequest> = (data: LoginRequest) => {
+        console.log(data);
+    };
+
     return ( 
         <div className="flex flex-col justify-center md:w-1/2 w-full p-12 bg-white h-auto md:rounded-l-2xl">
             <div className="p-12">
@@ -38,15 +50,14 @@ const SignUp = () => {
                     {" "}
                     <p>or us your email for Sign In</p>
                 </div>
-                <form className="space-y-6 ">
+                <form className="space-y-6 " onSubmit={handleSubmit(onSubmit)}>
                     <div className="relative mt-10 text-gray-900">
                         <input
                             type="email"
-                            id="email-login"
-                            name="email-login"
-                            required
+                            id="email"
+                            {...register("email", email.validation)}
                             className="w-full px-12 py-3 border border-gray-300 rounded-full shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
-                            placeholder="Enter your email"
+                            placeholder={email.placeholder}
                         />
                         <svg
                             className="absolute left-5 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400 fill-current"
@@ -55,16 +66,23 @@ const SignUp = () => {
                         >
                             <path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4L236.8 313.6c11.4 8.5 27 8.5 38.4 0L492.8 150.4c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48L48 64zM0 176L0 384c0 35.3 28.7 64 64 64l384 0c35.3 0 64-28.7 64-64l0-208L294.4 339.2c-22.8 17.1-54 17.1-76.8 0L0 176z" />
                         </svg>
+                        
+                    </div>
+                    <div className="text-red-500">
+                        {errors.email && (
+                            <span className="-mt-3 text-sm ">
+                                {errors.email.message}
+                            </span>
+                        )}
                     </div>
 
                     <div className="relative mt-1 text-gray-900">
                         <input
                             type="password"
-                            id="password-login"
-                            name="password-login"
-                            required
-                            className="w-full px-12 py-3 border border-gray-300 rounded-full shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
-                            placeholder="Enter your password"
+                            id="password"
+                            {...register("password", password.validation)}
+                            className={`${errors.password ? "border-red-500" : "border-gray-300"} ${errors.password ? "focus:border-red-500" : "focus:border-orange-500"} w-full px-12 py-3 border  rounded-full shadow-sm focus:outline-none focus:ring-orange-500  sm:text-sm`}
+                            placeholder={password.placeholder}
                         />
                         <svg
                             className="absolute left-5 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400 fill-current"
@@ -73,6 +91,14 @@ const SignUp = () => {
                         >
                             <path d="M144 144l0 48 160 0 0-48c0-44.2-35.8-80-80-80s-80 35.8-80 80zM80 192l0-48C80 64.5 144.5 0 224 0s144 64.5 144 144l0 48 16 0c35.3 0 64 28.7 64 64l0 192c0 35.3-28.7 64-64 64L64 512c-35.3 0-64-28.7-64-64L0 256c0-35.3 28.7-64 64-64l16 0z" />
                         </svg>
+                        
+                    </div>
+                    <div className="text-red-500">
+                        {errors.password && (
+                            <span className="-mt-3 text-sm text-red-500">
+                                {errors.password.message}
+                            </span>
+                        )}
                     </div>
                     <div className="flex justify-between">
                         <div className="flex items-center ml-2 mb-2">
