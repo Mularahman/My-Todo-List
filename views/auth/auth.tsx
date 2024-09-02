@@ -17,13 +17,6 @@ const AuthPage = () => {
         <CardBlack isSignUp={isSignUp} onSignUpClick={toggleAuth} />
       </div>
     </div>
-
-
-
-
-
-
-
   );
 };
 

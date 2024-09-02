@@ -1,21 +1,22 @@
 
-import { RegisterRequest } from "@/model/auth";
+import { LoginRequest } from "@/model/auth";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { registerUserSchema } from "../schema";
+import { loginUserSchema } from "../schema";
 const SignIn = () => {
-    const { name, email, password } = registerUserSchema;
-    const { register, handleSubmit, formState: { errors } } = useForm<RegisterRequest>();
+   
+    const { email, password } = loginUserSchema;
+    const { register, handleSubmit, formState: { errors } } = useForm<LoginRequest>();
 
-    const onSubmit: SubmitHandler<RegisterRequest> = (data: RegisterRequest) => {
+    const onSubmit: SubmitHandler<LoginRequest> = (data: LoginRequest) => {
         console.log(data);
     }
     return (
         <div className="p-12">
             <div className="text-center text-gray-900 mb-8">
                 <h1 className="text-3xl font-bold text-orange-500 mb-2">
-                    Hello, friend!
+                    Hello!
                 </h1>
-                <p>Create an account to get started.</p>
+                <p>Sign in to your account</p>
             </div>
             <div className="flex items-center mb-8 justify-center">
                 <a
@@ -45,30 +46,14 @@ const SignIn = () => {
             </div>
             <div className="mb-2 text-black text-sm text-center">
                 {" "}
-                <p>or us your email for registration</p>
+                <p>or us your email for Sign In</p>
             </div>
             <form className="space-y-6 " onSubmit={handleSubmit(onSubmit)}>
                 <div className="relative mt-10 text-gray-900">
                     <input
-                        type="name"
-                        id="name"
-                        {...register('name', name.validation)}
-                        className="w-full px-12 py-3 border border-gray-300 rounded-full shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
-                        placeholder={name.placeholder}
-                    />
-                    <svg
-                        className="absolute left-5 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400 fill-current"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 448 512"
-                    >
-                        <path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512l388.6 0c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304l-91.4 0z" />
-                    </svg>
-                </div>
-                <div className="relative mt-10 text-gray-900">
-                    <input
                         type="email"
                         id="email"
-                        {...register('email', email.validation)}
+                        {...register("email", email.validation)}
                         className="w-full px-12 py-3 border border-gray-300 rounded-full shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
                         placeholder={email.placeholder}
                     />
@@ -79,13 +64,23 @@ const SignIn = () => {
                     >
                         <path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4L236.8 313.6c11.4 8.5 27 8.5 38.4 0L492.8 150.4c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48L48 64zM0 176L0 384c0 35.3 28.7 64 64 64l384 0c35.3 0 64-28.7 64-64l0-208L294.4 339.2c-22.8 17.1-54 17.1-76.8 0L0 176z" />
                     </svg>
+
                 </div>
+                <div className="text-red-500">
+                    {errors.email && (
+                        <span className="-mt-3 text-sm ">
+                            {errors.email.message}
+                        </span>
+                    )}
+                </div>
+
                 <div className="relative mt-1 text-gray-900">
                     <input
                         type="password"
                         id="password"
-                        {...register('password', password.validation)}
-                        className="w-full px-12 py-3 border border-gray-300 rounded-full shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+
+                        {...register("password", password.validation)}
+                        className={`${errors.password ? "border-red-500" : "border-gray-300"} ${errors.password ? "focus:border-red-500" : "focus:border-orange-500"} w-full px-12 py-3 border  rounded-full shadow-sm focus:outline-none focus:ring-orange-500  sm:text-sm`}
                         placeholder={password.placeholder}
                     />
                     <svg
@@ -95,27 +90,40 @@ const SignIn = () => {
                     >
                         <path d="M144 144l0 48 160 0 0-48c0-44.2-35.8-80-80-80s-80 35.8-80 80zM80 192l0-48C80 64.5 144.5 0 224 0s144 64.5 144 144l0 48 16 0c35.3 0 64 28.7 64 64l0 192c0 35.3-28.7 64-64 64L64 512c-35.3 0-64-28.7-64-64L0 256c0-35.3 28.7-64 64-64l16 0z" />
                     </svg>
+
                 </div>
-                <div className="flex items-center justify-center ml-2 mb-2">
-                    <input
-                        id="terms"
-                        name="terms"
-                        type="checkbox"
-                        className="h-4 w-4 accent-orange-600 border-gray-300 focus:outline-none rounded-full cursor-pointer shadow-sm focus:ring-orange-500 "
-                    />
-                    <label
-                        htmlFor="terms"
-                        className="ml-2 text-sm text-gray-900 hover:text-orange-500 cursor-pointer"
-                    >
-                        I agree to the terms and conditions
-                    </label>
+                <div className="text-red-500">
+                    {errors.password && (
+                        <span className="-mt-3 text-sm text-red-500">
+                            {errors.password.message}
+                        </span>
+                    )}
+                </div>
+                <div className="flex justify-between">
+                    <div className="flex items-center ml-2 mb-2">
+                        <input
+                            id="terms"
+                            name="terms"
+                            type="checkbox"
+                            className="h-4 w-4 accent-orange-600 border-gray-300 focus:outline-none rounded-full cursor-pointer shadow-sm focus:ring-orange-500 "
+                        />
+                        <label
+                            htmlFor="terms"
+                            className="ml-2 text-sm text-gray-900 hover:text-orange-500 cursor-pointer"
+                        >
+                            Remember Me
+                        </label>
+                    </div>
+                    <div className="items-center text-gray-900 text-sm hover:text-orange-500 ">
+                        <a href="">Forgot Password ?</a>
+                    </div>
                 </div>
                 <div>
                     <button
                         type="submit"
-                        className="w-full mt-5 py-3 px-4 bg-orange-500 text-white font-bold rounded-full shadow-sm hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
+                        className="w-full mt-5 py-3 px-4 bg-orange-500 text-white font-bold rounded-full shadow-sm hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
                     >
-                        Sign Up
+                        Sign In
                     </button>
                 </div>
             </form>
