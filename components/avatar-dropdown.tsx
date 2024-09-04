@@ -19,7 +19,7 @@ export default function AvatarDropdown() {
             }
         };
 
-        document.addEventListener('mousedown', handleClickOutside);
+        document.addEventListener('mousedown', handleClickOutside, { passive: true });
 
         return () => {
             document.removeEventListener('mousedown', handleClickOutside);
@@ -32,6 +32,7 @@ export default function AvatarDropdown() {
                 onClick={toggleDropdown}
                 className="flex items-center justify-center"
                 ref={buttonRef}
+                aria-expanded={isOpen}
             >
                 <Image className="mr-2" src="/images/avatar.png" alt="avatar" width={50} height={50} />
                 <p className="text-white">Avatar</p>
@@ -43,18 +44,18 @@ export default function AvatarDropdown() {
             </button>
             {isOpen && (
                 <div
-                    className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg z-10"
+                    className="absolute right-0 mt-2 w-48 bg-gray-900 border-opacity-30 border rounded-lg shadow-lg z-10 transform translate-x-[35%] translate-y-[5%]"
                     ref={dropdownRef}
                 >
                     <ul className="py-2">
                         <li>
-                            <a href="/profile" className="block px-4 py-2 text-gray-800 hover:bg-gray-100">Profile</a>
+                            <a href="/profile" className="block px-4 py-2 text-white hover:bg-gray-800">Profile</a>
                         </li>
                         <li>
-                            <a href="/settings" className="block px-4 py-2 text-gray-800 hover:bg-gray-100">Settings</a>
+                            <a href="/settings" className="block px-4 py-2 text-white hover:bg-gray-800">Settings</a>
                         </li>
                         <li>
-                            <a href="/logout" className="block px-4 py-2 text-gray-800 hover:bg-gray-100">Logout</a>
+                            <a href="/logout" className="block px-4 py-2 text-white hover:bg-gray-800">Logout</a>
                         </li>
                     </ul>
                 </div>
