@@ -1,5 +1,7 @@
+"use client"
 import Link from 'next/link';
-import { useRouter } from "next/router";
+import { usePathname } from 'next/navigation';
+
 
 interface SidebarLinkProps {
     href: string;
@@ -8,13 +10,15 @@ interface SidebarLinkProps {
 }
 
 const SidebarLink = ({ href, label, icon } : SidebarLinkProps) => {
-    const router = useRouter();
-    const isActive = router.pathname === href;
+
+    
+    const pathname = usePathname();
+    const isActive = pathname === href;
 
     return (
         <Link href={href}>
             <div
-                className={`flex items-center justify-start group hover:text-orange-500 p-2 rounded ${isActive ? 'bg-orange-500 bg-opacity-50' : ''
+                className={`flex items-center justify-start group hover:text-orange-500 p-1 rounded-xl ${isActive ? 'bg-orange-500 bg-opacity-50 group hover:text-gray-300 hover:bg-opacity-50 hover:bg-gray-300' : ''
                     }`}
             >
                 <span className="mr-2 group-hover:text-orange-500">
