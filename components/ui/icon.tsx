@@ -102,7 +102,7 @@ export const CompletedIcon = () => (
 export const NotificationIcon = () => (
   <span>
     <svg
-      className="text-white p-2"
+      className="text-white p-2 hover:text-orange-500"
       fill="CurrentColor"
       width={35}
       height={35}

@@ -6,12 +6,24 @@ import {
   DayIcon,
   FilterIcon,
   InboxIcon,
+  NotificationIcon,
   SearchIcon,
 } from "../ui/icon";
 import SidebarLink from "./sidebar-link";
+import AvatarSidebar from "./avatar";
 const Sidebar = () => {
   return (
-    <nav className="pt-8">
+    <nav className="">
+      <div className="flex px-2 items-center justify-between mb-6  ">
+        <div className="flex items-center justify-center gap-4">
+          <AvatarSidebar />
+          <span className="text-white">Nama</span>
+        </div>
+
+        <div className="cursor-pointer">
+          <NotificationIcon />
+        </div>
+      </div>
       <ul className="space-y-4">
         <li>
           <Link href="/dashboard/#">
@@ -29,36 +41,28 @@ const Sidebar = () => {
           <SidebarLink href="/dashboard" label="Search" icon={<SearchIcon />} />
         </li>
         <li>
-          <SidebarLink
-            href="/dashboard/inbox"
-            label="Inbox"
-            icon={<InboxIcon />}
-          />
+          <SidebarLink href="/inbox" label="Inbox" icon={<InboxIcon />} />
+        </li>
+        <li>
+          <SidebarLink href="/today" label="Today" icon={<DayIcon />} />
         </li>
         <li>
           <SidebarLink
-            href="/dashboard/today"
-            label="Today"
-            icon={<DayIcon />}
-          />
-        </li>
-        <li>
-          <SidebarLink
-            href="/dashboard/upcoming"
+            href="/upcoming"
             label="Upcoming"
             icon={<CalenderIcon />}
           />
         </li>
         <li>
           <SidebarLink
-            href="/dashboard/filters-labels"
+            href="/filters-labels"
             label="Filters & Labels"
             icon={<FilterIcon />}
           />
         </li>
         <li>
           <SidebarLink
-            href="/dashboard/completed"
+            href="/completed"
             label="Completed"
             icon={<CompletedIcon />}
           />
