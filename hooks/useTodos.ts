@@ -2,19 +2,25 @@
 
 import { useState, useEffect } from 'react';
 import { Todo, TodoFilter } from '@/types';
-import { generateId } from '@/lib/utils';
+import { v4 as uuidv4 } from 'uuid';
+import { startOfDay, endOfDay, isWithinInterval } from 'date-fns';
 
 export function useTodos() {
   const [todos, setTodos] = useState<Todo[]>([]);
   const [filter, setFilter] = useState<TodoFilter>('all');
   const [isLoaded, setIsLoaded] = useState(false);
 
-  // Load todos from localStorage on initial render
   useEffect(() => {
     const storedTodos = localStorage.getItem('todos');
     if (storedTodos) {
       try {
-        setTodos(JSON.parse(storedTodos));
+        const parsedTodos = JSON.parse(storedTodos);
+        // Convert stored date strings back to Date objects
+        const todosWithDates = parsedTodos.map((todo: any) => ({
+          ...todo,
+          dueDate: todo.dueDate ? new Date(todo.dueDate) : null,
+        }));
+        setTodos(todosWithDates);
       } catch (error) {
         console.error('Failed to parse todos from localStorage:', error);
       }
@@ -22,36 +28,26 @@ export function useTodos() {
     setIsLoaded(true);
   }, []);
 
-  // Save todos to localStorage whenever they change
   useEffect(() => {
     if (isLoaded) {
       localStorage.setItem('todos', JSON.stringify(todos));
     }
   }, [todos, isLoaded]);
 
-  // Filter todos based on the current filter
-  const filteredTodos = todos.filter((todo) => {
-    if (filter === 'all') return true;
-    if (filter === 'active') return !todo.completed;
-    if (filter === 'completed') return todo.completed;
-    return true;
-  });
-
-  // Add a new todo
-  const addTodo = (text: string) => {
+  const addTodo = (text: string, dueDate: Date | null) => {
     if (!text.trim()) return;
     
     const newTodo: Todo = {
-      id: generateId(),
+      id: uuidv4(),
       text: text.trim(),
       completed: false,
       createdAt: Date.now(),
+      dueDate,
     };
     
     setTodos((prevTodos) => [newTodo, ...prevTodos]);
   };
 
-  // Toggle a todo's completed status
   const toggleTodo = (id: string) => {
     setTodos((prevTodos) =>
       prevTodos.map((todo) =>
@@ -60,29 +56,46 @@ export function useTodos() {
     );
   };
 
-  // Delete a todo
   const deleteTodo = (id: string) => {
     setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id));
   };
 
-  // Edit a todo
-  const editTodo = (id: string, text: string) => {
+  const editTodo = (id: string, text: string, dueDate: Date | null) => {
     if (!text.trim()) return;
     
     setTodos((prevTodos) =>
       prevTodos.map((todo) =>
-        todo.id === id ? { ...todo, text: text.trim() } : todo
+        todo.id === id ? { ...todo, text: text.trim(), dueDate } : todo
       )
     );
   };
 
+  const getTodayStats = () => {
+    const now = new Date();
+    const todayTodos = todos.filter(todo => {
+      const todoDate = todo.dueDate;
+      if (!todoDate) return false;
+      
+      return isWithinInterval(todoDate, {
+        start: startOfDay(now),
+        end: endOfDay(now)
+      });
+    });
+
+    return {
+      total: todayTodos.length,
+      completed: todayTodos.filter(todo => todo.completed).length
+    };
+  };
+
   return {
-    todos: filteredTodos,
+    todos,
     filter,
     setFilter,
     addTodo,
     toggleTodo,
     deleteTodo,
     editTodo,
+    getTodayStats,
   };
 }

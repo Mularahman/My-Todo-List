@@ -3,6 +3,9 @@ export type Todo = {
   text: string;
   completed: boolean;
   createdAt: number;
+  dueDate: Date | null;
 };
 
 export type TodoFilter = 'all' | 'active' | 'completed';
+
+export type TimeStatus = 'normal' | 'warning' | 'danger' | 'overdue';

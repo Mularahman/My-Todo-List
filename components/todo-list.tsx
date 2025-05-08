@@ -1,11 +1,13 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { AnimatePresence } from 'framer-motion';
 import { Todo, TodoFilter } from '@/types';
 import { useTodos } from '@/hooks/useTodos';
 import { TodoItem } from '@/components/todo-item';
 import { TodoForm } from '@/components/todo-form';
 import { TodoFilters } from '@/components/todo-filters';
+import { ProgressBar } from '@/components/progress-bar';
 import { ListX } from 'lucide-react';
 
 export function TodoList() {
@@ -17,11 +19,11 @@ export function TodoList() {
     toggleTodo,
     deleteTodo,
     editTodo,
+    getTodayStats,
   } = useTodos();
 
   const [mounted, setMounted] = useState(false);
 
-  // Prevent hydration mismatch
   useEffect(() => {
     setMounted(true);
   }, []);
@@ -30,26 +32,37 @@ export function TodoList() {
     return null;
   }
 
+  const filteredTodos = todos.filter((todo) => {
+    if (filter === 'all') return true;
+    if (filter === 'active') return !todo.completed;
+    if (filter === 'completed') return todo.completed;
+    return true;
+  });
+
   const todoCount = {
     all: todos.length,
     active: todos.filter(todo => !todo.completed).length,
     completed: todos.filter(todo => todo.completed).length,
   };
 
+  const { completed, total } = getTodayStats();
+
   return (
     <div className="w-full max-w-md mx-auto">
       <TodoForm onAddTodo={addTodo} />
       
+      <ProgressBar completed={completed} total={total} />
+
+      <TodoFilters 
+        currentFilter={filter} 
+        onFilterChange={setFilter} 
+        todoCount={todoCount} 
+      />
+
       {todos.length > 0 ? (
-        <>
-          <TodoFilters 
-            currentFilter={filter} 
-            onFilterChange={setFilter} 
-            todoCount={todoCount} 
-          />
-          
-          <div className="space-y-2">
-            {todos.map((todo) => (
+        <div className="space-y-2">
+          <AnimatePresence initial={false}>
+            {filteredTodos.map((todo) => (
               <TodoItem
                 key={todo.id}
                 todo={todo}
@@ -58,8 +71,15 @@ export function TodoList() {
                 onEdit={editTodo}
               />
             ))}
-          </div>
-        </>
+          </AnimatePresence>
+          {filteredTodos.length === 0 && (
+            <div className="text-center py-8 animate-in fade-in duration-300">
+              <p className="text-muted-foreground">
+                No {filter === 'completed' ? 'completed' : 'active'} tasks found
+              </p>
+            </div>
+          )}
+        </div>
       ) : (
         <div className="text-center py-12 animate-in fade-in duration-300">
           <div className="flex justify-center mb-4 text-muted-foreground">
