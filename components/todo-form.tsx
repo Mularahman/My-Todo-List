@@ -64,7 +64,7 @@ export function TodoForm({ onAddTodo }: TodoFormProps) {
             <CalendarComponent
               mode="single"
               selected={date || undefined}
-              onSelect={setDate}
+              onSelect={(day) => setDate(day ?? null)}
               initialFocus
             />
           </PopoverContent>

@@ -19,7 +19,7 @@ interface TodoItemProps {
   onEdit: (id: string, text: string, dueDate: Date | null) => void;
 }
 
-export function TodoItem({ todo, onToggle, onDelete, onEdit }: TodoItemProps) {
+export function TodoItem({ todo, onToggle, onDelete, onEdit } : TodoItemProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [editText, setEditText] = useState(todo.text);
   const [editDate, setEditDate] = useState<Date | null>(todo.dueDate);
@@ -129,7 +129,7 @@ export function TodoItem({ todo, onToggle, onDelete, onEdit }: TodoItemProps) {
                 <CalendarComponent
                   mode="single"
                   selected={editDate || undefined}
-                  onSelect={setEditDate}
+                  onSelect={(day) => setEditDate(day ?? null)}
                   initialFocus
                 />
               </PopoverContent>
