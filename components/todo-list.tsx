@@ -55,7 +55,7 @@ const TodoList = () => {
     <div className="w-full max-w-md mx-auto">
       <TodoForm onAddTodo={addTodo} />
 
-      <ProgressBar completed={completed} total={total} />
+      {/* <ProgressBar completed={completed} total={total} /> */}
 
       <TodoFilters
         currentFilter={filter}
