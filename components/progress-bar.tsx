@@ -1,7 +1,8 @@
 "use client";
 
-import { motion } from 'framer-motion';
-import { Progress } from '@/components/ui/progress';
+import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { Progress } from "@/components/ui/progress";
 
 interface ProgressBarProps {
   completed: number;
@@ -9,8 +10,16 @@ interface ProgressBarProps {
 }
 
 export function ProgressBar({ completed, total }: ProgressBarProps) {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;
+
   const percentage = total === 0 ? 0 : Math.round((completed / total) * 100);
-// console.log(completed, total)
+
   return (
     <div className="w-full space-y-2 mb-6">
       <div className="flex justify-between text-sm text-muted-foreground">
