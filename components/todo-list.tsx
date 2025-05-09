@@ -1,20 +1,20 @@
 "use client"
 
-import { useEffect, useState } from 'react';
-import { AnimatePresence } from 'framer-motion';
-import { Todo, TodoFilter } from '@/types';
-import { useTodos } from '@/hooks/useTodos';
-import { TodoItem } from '@/components/todo-item';
-import { TodoForm } from '@/components/todo-form';
-import { TodoFilters } from '@/components/todo-filters';
-// import { ProgressBar } from '@/components/progress-bar';
-import { ListX } from 'lucide-react';
-import dynamic from 'next/dynamic';
-const ProgressBar = dynamic(() => import('@/components/progress-bar').then((mod) => mod.ProgressBar), {
+import { useEffect, useState } from "react";
+import { AnimatePresence } from "framer-motion";
+import { Todo, TodoFilter } from "@/types";
+import { useTodos } from "@/hooks/useTodos";
+import { TodoItem } from "@/components/todo-item";
+import { TodoForm } from "@/components/todo-form";
+import { TodoFilters } from "@/components/todo-filters";
+// import { ProgressBar } from "@/components/progress-bar";
+import { ListX } from "lucide-react";
+import dynamic from "next/dynamic";
+const ProgressBar = dynamic(() => import("@/components/progress-bar").then((mod) => mod.ProgressBar), {
   ssr: false,
 });
 
-const TodoList = () =>{
+const TodoList = () => {
   const {
     todos,
     filter,
@@ -37,9 +37,9 @@ const TodoList = () =>{
   }
 
   const filteredTodos = todos.filter((todo) => {
-    if (filter === 'all') return true;
-    if (filter === 'active') return !todo.completed;
-    if (filter === 'completed') return todo.completed;
+    if (filter === "all") return true;
+    if (filter === "active") return !todo.completed;
+    if (filter === "completed") return todo.completed;
     return true;
   });
 
@@ -54,13 +54,13 @@ const TodoList = () =>{
   return (
     <div className="w-full max-w-md mx-auto">
       <TodoForm onAddTodo={addTodo} />
-      
+
       <ProgressBar completed={completed} total={total} />
 
-      <TodoFilters 
-        currentFilter={filter} 
-        onFilterChange={setFilter} 
-        todoCount={todoCount} 
+      <TodoFilters
+        currentFilter={filter}
+        onFilterChange={setFilter}
+        todoCount={todoCount}
       />
 
       {todos.length > 0 ? (
@@ -79,7 +79,7 @@ const TodoList = () =>{
           {filteredTodos.length === 0 && (
             <div className="text-center py-8 animate-in fade-in duration-300">
               <p className="text-muted-foreground">
-                No {filter === 'completed' ? 'completed' : 'active'} tasks found
+                No {filter === "completed" ? "completed" : "active"} tasks found
               </p>
             </div>
           )}

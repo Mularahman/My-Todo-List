@@ -6,6 +6,6 @@ export type Todo = {
   dueDate: Date | null;
 };
 
-export type TodoFilter = 'all' | 'active' | 'completed';
+export type TodoFilter = "all" | "active" | "completed";
 
-export type TimeStatus = 'normal' | 'warning' | 'danger' | 'overdue';
+export type TimeStatus = "normal" | "warning" | "danger" | "overdue";

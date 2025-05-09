@@ -1,17 +1,17 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { Todo, TodoFilter } from '@/types';
-import { v4 as uuidv4 } from 'uuid';
-import { startOfDay, endOfDay, isWithinInterval } from 'date-fns';
+import { useState, useEffect } from "react";
+import { Todo, TodoFilter } from "@/types";
+import { v4 as uuidv4 } from "uuid";
+import { startOfDay, endOfDay, isWithinInterval } from "date-fns";
 
 export function useTodos() {
   const [todos, setTodos] = useState<Todo[]>([]);
-  const [filter, setFilter] = useState<TodoFilter>('all');
+  const [filter, setFilter] = useState<TodoFilter>("all");
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    const storedTodos = localStorage.getItem('todos');
+    const storedTodos = localStorage.getItem("todos");
     if (storedTodos) {
       try {
         const parsedTodos = JSON.parse(storedTodos);
@@ -22,7 +22,7 @@ export function useTodos() {
         }));
         setTodos(todosWithDates);
       } catch (error) {
-        console.error('Failed to parse todos from localStorage:', error);
+        console.error("Failed to parse todos from localStorage:", error);
       }
     }
     setIsLoaded(true);
@@ -30,7 +30,7 @@ export function useTodos() {
 
   useEffect(() => {
     if (isLoaded) {
-      localStorage.setItem('todos', JSON.stringify(todos));
+      localStorage.setItem("todos", JSON.stringify(todos));
     }
   }, [todos, isLoaded]);
 
@@ -40,7 +40,7 @@ export function useTodos() {
   const parsedDueDate =
     dueDate instanceof Date
       ? dueDate
-      : typeof dueDate === 'string' && dueDate.trim() !== ''
+      : typeof dueDate === "string" && dueDate.trim() !== ""
         ? new Date(dueDate)
         : new Date(); 
 

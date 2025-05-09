@@ -1,20 +1,20 @@
-'use client';
+"use client";
 
-import { useState, useRef, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { PlusIcon, Calendar } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { Calendar as CalendarComponent } from '@/components/ui/calendar';
-import { format } from 'date-fns';
+import { useState, useRef, useEffect } from "react";
+import { motion } from "framer-motion";
+import { PlusIcon, Calendar } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Calendar as CalendarComponent } from "@/components/ui/calendar";
+import { format } from "date-fns";
 
 interface TodoFormProps {
   onAddTodo: (text: string, dueDate: Date | null) => void;
 }
 
 export function TodoForm({ onAddTodo }: TodoFormProps) {
-  const [text, setText] = useState('');
+  const [text, setText] = useState("");
   const [date, setDate] = useState<Date | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -22,7 +22,7 @@ export function TodoForm({ onAddTodo }: TodoFormProps) {
     e.preventDefault();
     if (text.trim()) {
       onAddTodo(text, date);
-      setText('');
+      setText("");
       setDate(null);
       inputRef.current?.focus();
     }
@@ -33,7 +33,7 @@ export function TodoForm({ onAddTodo }: TodoFormProps) {
   }, []);
 
   return (
-    <motion.form 
+    <motion.form
       onSubmit={handleSubmit}
       className="flex w-full space-x-2 mb-6"
       initial={{ opacity: 0, y: -20 }}
@@ -52,8 +52,8 @@ export function TodoForm({ onAddTodo }: TodoFormProps) {
         />
         <Popover>
           <PopoverTrigger asChild>
-            <Button 
-              variant="outline" 
+            <Button
+              variant="outline"
               size="icon"
               className={date ? "text-primary" : "text-muted-foreground"}
             >
@@ -70,8 +70,8 @@ export function TodoForm({ onAddTodo }: TodoFormProps) {
           </PopoverContent>
         </Popover>
       </div>
-      <Button 
-        type="submit" 
+      <Button
+        type="submit"
         className="transition-all duration-200 hover:scale-105"
         disabled={!text.trim()}
       >

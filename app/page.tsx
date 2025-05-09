@@ -1,8 +1,6 @@
-"use client"
-
-import { ThemeToggle } from '@/components/theme-toggle';
-import TodoList from '@/components/todo-list';
-import { CheckCircle } from 'lucide-react';
+import { ThemeToggle } from "@/components/theme-toggle";
+import TodoList from "@/components/todo-list";
+import { CheckCircle } from "lucide-react";
 
 export default function Home() {
   return (

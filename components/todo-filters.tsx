@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { TodoFilter } from '@/types';
-import { cn } from '@/lib/utils';
+import { TodoFilter } from "@/types";
+import { cn } from "@/lib/utils";
 
 interface TodoFiltersProps {
   currentFilter: TodoFilter;
@@ -15,9 +15,9 @@ interface TodoFiltersProps {
 
 export function TodoFilters({ currentFilter, onFilterChange, todoCount }: TodoFiltersProps) {
   const filters: { value: TodoFilter; label: string }[] = [
-    { value: 'all', label: 'All' },
-    { value: 'active', label: 'Active' },
-    { value: 'completed', label: 'Completed' },
+    { value: "all", label: "All" },
+    { value: "active", label: "Active" },
+    { value: "completed", label: "Completed" },
   ];
 
   return (
@@ -35,19 +35,19 @@ export function TodoFilters({ currentFilter, onFilterChange, todoCount }: TodoFi
                 : "text-muted-foreground"
             )}
           >
-            {filter.label} 
+            {filter.label}
             <span className="ml-1 text-xs rounded-full px-1.5 bg-muted">
               {todoCount[filter.value]}
             </span>
           </button>
         ))}
       </div>
-      
+
       <div className="text-sm text-muted-foreground">
-        {todoCount.active === 0 && todoCount.all > 0 
-          ? "All tasks completed 🎉" 
-          : todoCount.active === 1 
-            ? "1 task remaining" 
+        {todoCount.active === 0 && todoCount.all > 0
+          ? "All tasks completed 🎉"
+          : todoCount.active === 1
+            ? "1 task remaining"
             : `${todoCount.active} tasks remaining`}
       </div>
     </div>

@@ -1,16 +1,16 @@
-'use client';
+"use client";
 
-import { useState, useRef, useEffect } from 'react';
-import { Todo } from '@/types';
-import { Pencil, Trash2, Check, X, Calendar } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Input } from '@/components/ui/input';
-import { Countdown } from '@/components/countdown';
-import { motion, AnimatePresence } from 'framer-motion';
-import { cn } from '@/lib/utils';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { Calendar as CalendarComponent } from '@/components/ui/calendar';
+import { useState, useRef, useEffect } from "react";
+import { Todo } from "@/types";
+import { Pencil, Trash2, Check, X, Calendar } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Input } from "@/components/ui/input";
+import { Countdown } from "@/components/countdown";
+import { motion, AnimatePresence } from "framer-motion";
+import { cn } from "@/lib/utils";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Calendar as CalendarComponent } from "@/components/ui/calendar";
 
 interface TodoItemProps {
   todo: Todo;
@@ -19,7 +19,7 @@ interface TodoItemProps {
   onEdit: (id: string, text: string, dueDate: Date | null) => void;
 }
 
-export function TodoItem({ todo, onToggle, onDelete, onEdit } : TodoItemProps) {
+export function TodoItem({ todo, onToggle, onDelete, onEdit }: TodoItemProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [editText, setEditText] = useState(todo.text);
   const [editDate, setEditDate] = useState<Date | null>(todo.dueDate);
@@ -51,15 +51,15 @@ export function TodoItem({ todo, onToggle, onDelete, onEdit } : TodoItemProps) {
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       handleSave();
-    } else if (e.key === 'Escape') {
+    } else if (e.key === "Escape") {
       handleCancel();
     }
   };
 
   return (
-    <motion.div 
+    <motion.div
       layout
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
@@ -71,13 +71,13 @@ export function TodoItem({ todo, onToggle, onDelete, onEdit } : TodoItemProps) {
       )}
     >
       <div className="flex-1 flex items-center">
-        <Checkbox 
+        <Checkbox
           checked={todo.completed}
           onCheckedChange={() => onToggle(todo.id)}
           className="mr-3 transition-transform duration-200 hover:scale-110"
           disabled={isEditing}
         />
-        
+
         <div className="flex-1 space-y-1">
           {isEditing ? (
             <Input
@@ -90,7 +90,7 @@ export function TodoItem({ todo, onToggle, onDelete, onEdit } : TodoItemProps) {
               autoComplete="off"
             />
           ) : (
-            <span 
+            <span
               className={cn(
                 "text-foreground transition-all duration-200",
                 todo.completed && "line-through text-muted-foreground"
@@ -99,7 +99,7 @@ export function TodoItem({ todo, onToggle, onDelete, onEdit } : TodoItemProps) {
               {todo.text}
             </span>
           )}
-          
+
           {todo.dueDate && !isEditing && (
             <div className="flex items-center space-x-2">
               <Calendar className="h-3 w-3 text-muted-foreground" />
@@ -117,8 +117,8 @@ export function TodoItem({ todo, onToggle, onDelete, onEdit } : TodoItemProps) {
           <>
             <Popover>
               <PopoverTrigger asChild>
-                <Button 
-                  variant="ghost" 
+                <Button
+                  variant="ghost"
                   size="icon"
                   className="h-8 w-8 text-muted-foreground hover:text-foreground"
                 >
@@ -134,17 +134,17 @@ export function TodoItem({ todo, onToggle, onDelete, onEdit } : TodoItemProps) {
                 />
               </PopoverContent>
             </Popover>
-            <Button 
-              variant="ghost" 
-              size="icon" 
+            <Button
+              variant="ghost"
+              size="icon"
               onClick={handleSave}
               className="h-8 w-8 text-green-500 hover:text-green-600 hover:bg-green-100"
             >
               <Check className="h-4 w-4" />
             </Button>
-            <Button 
-              variant="ghost" 
-              size="icon" 
+            <Button
+              variant="ghost"
+              size="icon"
               onClick={handleCancel}
               className="h-8 w-8 text-red-500 hover:text-red-600 hover:bg-red-100"
             >
@@ -153,18 +153,18 @@ export function TodoItem({ todo, onToggle, onDelete, onEdit } : TodoItemProps) {
           </>
         ) : (
           <>
-            <Button 
-              variant="ghost" 
-              size="icon" 
+            <Button
+              variant="ghost"
+              size="icon"
               onClick={handleEdit}
               className="h-8 w-8 text-blue-500 hover:text-blue-600 hover:bg-blue-100"
               disabled={todo.completed}
             >
               <Pencil className="h-4 w-4" />
             </Button>
-            <Button 
-              variant="ghost" 
-              size="icon" 
+            <Button
+              variant="ghost"
+              size="icon"
               onClick={() => onDelete(todo.id)}
               className="h-8 w-8 text-red-500 hover:text-red-600 hover:bg-red-100"
             >

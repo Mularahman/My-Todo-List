@@ -1,23 +1,23 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
-import { differenceInDays, differenceInHours, differenceInMinutes, isPast } from 'date-fns';
-import { TimeStatus } from '@/types';
+import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import { differenceInDays, differenceInHours, differenceInMinutes, isPast } from "date-fns";
+import { TimeStatus } from "@/types";
 
 interface CountdownProps {
   dueDate: Date;
 }
 
 export function Countdown({ dueDate }: CountdownProps) {
-  const [timeLeft, setTimeLeft] = useState('');
-  const [status, setStatus] = useState<TimeStatus>('normal');
+  const [timeLeft, setTimeLeft] = useState("");
+  const [status, setStatus] = useState<TimeStatus>("normal");
 
   useEffect(() => {
     const updateTime = () => {
       if (isPast(dueDate)) {
-        setTimeLeft('Overdue');
-        setStatus('overdue');
+        setTimeLeft("Overdue");
+        setStatus("overdue");
         return;
       }
 
@@ -25,9 +25,9 @@ export function Countdown({ dueDate }: CountdownProps) {
       const hours = differenceInHours(dueDate, new Date()) % 24;
       const minutes = differenceInMinutes(dueDate, new Date()) % 60;
 
-      let newStatus: TimeStatus = 'normal';
-      if (days === 0 && hours < 2) newStatus = 'danger';
-      else if (days === 0 && hours < 6) newStatus = 'warning';
+      let newStatus: TimeStatus = "normal";
+      if (days === 0 && hours < 2) newStatus = "danger";
+      else if (days === 0 && hours < 6) newStatus = "warning";
 
       setStatus(newStatus);
 
@@ -46,10 +46,10 @@ export function Countdown({ dueDate }: CountdownProps) {
   }, [dueDate]);
 
   const statusColors = {
-    normal: 'text-muted-foreground',
-    warning: 'text-yellow-500 dark:text-yellow-400',
-    danger: 'text-red-500 dark:text-red-400',
-    overdue: 'text-destructive font-medium',
+    normal: "text-muted-foreground",
+    warning: "text-yellow-500 dark:text-yellow-400",
+    danger: "text-red-500 dark:text-red-400",
+    overdue: "text-destructive font-medium",
   };
 
   return (
