@@ -34,19 +34,27 @@ export function useTodos() {
     }
   }, [todos, isLoaded]);
 
-  const addTodo = (text: string, dueDate: Date | null) => {
-    if (!text.trim()) return;
-    
-    const newTodo: Todo = {
-      id: uuidv4(),
-      text: text.trim(),
-      completed: false,
-      createdAt: Date.now(),
-      dueDate,
-    };
-    
-    setTodos((prevTodos) => [newTodo, ...prevTodos]);
+  const addTodo = (text: string, dueDate: Date | string | null) => {
+  if (!text.trim()) return;
+
+  const parsedDueDate =
+    dueDate instanceof Date
+      ? dueDate
+      : typeof dueDate === 'string' && dueDate.trim() !== ''
+        ? new Date(dueDate)
+        : new Date(); 
+
+  const newTodo: Todo = {
+    id: uuidv4(),
+    text: text.trim(),
+    completed: false,
+    createdAt: Date.now(),
+    dueDate: parsedDueDate,
   };
+
+  setTodos((prevTodos) => [newTodo, ...prevTodos]);
+};
+
 
   const toggleTodo = (id: string) => {
     setTodos((prevTodos) =>
@@ -70,23 +78,26 @@ export function useTodos() {
     );
   };
 
-  const getTodayStats = () => {
-    const now = new Date();
-    const todayTodos = todos.filter(todo => {
-      const todoDate = todo.dueDate;
-      if (!todoDate) return false;
-      
-      return isWithinInterval(todoDate, {
-        start: startOfDay(now),
-        end: endOfDay(now)
-      });
-    });
+ const getTodayStats = () => {
+  const now = new Date();
 
-    return {
-      total: todayTodos.length,
-      completed: todayTodos.filter(todo => todo.completed).length
-    };
+  const todayTodos = todos.filter((todo) => {
+    const todoDate = todo.dueDate;
+
+    if (!(todoDate instanceof Date) || isNaN(todoDate.getTime())) return false;
+
+    return isWithinInterval(todoDate, {
+      start: startOfDay(now),
+      end: endOfDay(now),
+    });
+  });
+
+  return {
+    total: todayTodos.length,
+    completed: todayTodos.filter((todo) => todo.completed).length,
   };
+};
+
 
   return {
     todos,

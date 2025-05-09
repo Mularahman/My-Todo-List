@@ -7,8 +7,12 @@ import { useTodos } from '@/hooks/useTodos';
 import { TodoItem } from '@/components/todo-item';
 import { TodoForm } from '@/components/todo-form';
 import { TodoFilters } from '@/components/todo-filters';
-import { ProgressBar } from '@/components/progress-bar';
+// import { ProgressBar } from '@/components/progress-bar';
 import { ListX } from 'lucide-react';
+import dynamic from 'next/dynamic';
+const ProgressBar = dynamic(() => import('@/components/progress-bar'), {
+  ssr: false,
+});
 
 export function TodoList() {
   const {
