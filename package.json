@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "lint:fix": "eslint . --fix"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
@@ -47,8 +48,6 @@
     "cmdk": "^1.0.0",
     "date-fns": "^3.6.0",
     "embla-carousel-react": "^8.3.0",
-    "eslint": "8.49.0",
-    "eslint-config-next": "13.5.1",
     "framer-motion": "^11.0.8",
     "input-otp": "^1.2.4",
     "lucide-react": "^0.446.0",
@@ -71,6 +70,8 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@types/uuid": "^9.0.8"
+    "@types/uuid": "^9.0.8",
+    "eslint": "^8.57.1",
+    "eslint-config-next": "^15.3.2"
   }
 }
