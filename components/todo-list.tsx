@@ -10,7 +10,7 @@ import { TodoFilters } from '@/components/todo-filters';
 // import { ProgressBar } from '@/components/progress-bar';
 import { ListX } from 'lucide-react';
 import dynamic from 'next/dynamic';
-const ProgressBar = dynamic(() => import('@/components/progress-bar'), {
+const ProgressBar = dynamic(() => import('@/components/progress-bar').then((mod) => mod.ProgressBar), {
   ssr: false,
 });
 

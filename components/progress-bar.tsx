@@ -8,7 +8,7 @@ interface ProgressBarProps {
   total: number;
 }
 
-const ProgressBar = ({ completed, total }: ProgressBarProps) => {
+export function ProgressBar({ completed, total }: ProgressBarProps) {
   const percentage = total === 0 ? 0 : Math.round((completed / total) * 100);
 // console.log(completed, total)
   return (
@@ -27,4 +27,3 @@ const ProgressBar = ({ completed, total }: ProgressBarProps) => {
     </div>
   );
 }
-export default ProgressBar
