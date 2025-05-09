@@ -1,4 +1,4 @@
-'use client';
+"use client"
 
 import { useEffect, useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
@@ -14,7 +14,7 @@ const ProgressBar = dynamic(() => import('@/components/progress-bar'), {
   ssr: false,
 });
 
-export function TodoList() {
+const TodoList = () =>{
   const {
     todos,
     filter,
@@ -96,3 +96,4 @@ export function TodoList() {
     </div>
   );
 }
+export default TodoList
